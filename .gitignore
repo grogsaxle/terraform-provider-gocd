@@ -1,5 +1,5 @@
 /.idea
-/docker/godata
+/godata/server
 .DS_Store
 /crash.log
 /terraform-provider-gocd
