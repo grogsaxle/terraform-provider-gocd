@@ -40,10 +40,7 @@ teardown-test-gocd:
 	rm -f godata/server/config/cruise-config.xml
 	docker-compose down
 
-cleanup: teardown-test-gocd clean_files
-
-clean_files:
-	rm -rf godata/server
+cleanup: teardown-test-gocd 
 
 report_coverage:
 	bash <(curl -s https://codecov.io/bash)
