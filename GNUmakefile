@@ -8,6 +8,7 @@ TESTARGS ?= -race -coverprofile=profile.out -covermode=atomic
 
 export GOCD_URL=$(SERVER)
 export GOCD_SKIP_SSL_CHECK=1
+unexport GIT_HTTP_USER_AGENT
 
 ## Travis targets
 travis: before_install script after_success deploy_on_develop
