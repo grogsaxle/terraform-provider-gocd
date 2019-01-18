@@ -55,3 +55,9 @@ data "gocd_stage_definition" "example" {
    }
 }
 ```
+
+If you have existing state, you must first remove all `gocd_pipeline_stage` resources (this will not modify any pipelines):
+```
+terraform refresh
+terraform state list | grep gocd_pipeline_stage | xargs terraform state rm
+```
