@@ -6,6 +6,8 @@ This document describes any changes that you must make to your HCL to migrate to
 
 This version removes the `gocd_pipeline_stage` resource and replaces it with the `gocd_stage_definition` data source.
 
+Also `gocd_pipeline_stage.manual_approval` has been replaced by `gocd_stage_definition.approval.type` (mirroring the GoCD API).
+
 **How to update your terraform:**
 
 Find all occurrences of `resource "gocd_pipeline_stage"` in code and replace these with `data "gocd_stage_definition"`.
@@ -13,6 +15,8 @@ Find all occurrences of `resource "gocd_pipeline_stage"` in code and replace the
 Remove the `pipeline` property from the stage definitions, instead creating the link between stages and pipelines using a `stages = [...]` property in every `gocd_pipeline` and `gocd_pipeine_template` resource.
 
 Replace any lookup of `${gocd_pipeline_stage.name.property}` with `${data.gocd_stage_definition.name.property}`
+
+Replace any uses of `gocd_pipeline_stage.manual_approval` with `approval { type = "manual" }`
 
 **Example**:
 
@@ -29,6 +33,7 @@ resource "gocd_pipeline_stage" "example" {
    name = "example"
    pipeline = "${gocd_pipeline.pipeline.name}"
    jobs = [...]
+   manual_approval = true
 }
 ```
 
@@ -45,5 +50,8 @@ resource "gocd_pipeline" "example" {
 data "gocd_stage_definition" "example" {
    name = "example"
    jobs = [...]
+   approval {
+     type = "manual"
+   }
 }
 ```
