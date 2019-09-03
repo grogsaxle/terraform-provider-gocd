@@ -9,13 +9,13 @@ data "gocd_task_definition" "test" {
   plugin_version = "plugin.version"
 
   configuration {
-    "key"   = "key1"
-    "value" = "value1"
+    key   = "key1"
+    value = "value1"
   }
 
   configuration {
-    "key"   = "key2"
-    "value" = "value2"
+    key   = "key2"
+    value = "value2"
   }
 }
 
