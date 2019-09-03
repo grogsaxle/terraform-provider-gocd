@@ -19,6 +19,7 @@ data "gocd_job_definition" "test" {
   name = "job-name"
 
   tasks = [
-    "${data.gocd_task_definition.test.json}",
+    data.gocd_task_definition.test.json,
   ]
 }
+

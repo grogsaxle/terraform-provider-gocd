@@ -1,34 +1,33 @@
 locals {
-  "group" = "test-pipelines"
+  group = "test-pipelines"
 }
 
 resource "gocd_pipeline" "pipe-A" {
-  name      = "pipe-A"
-  group     = "${local.group}"
-  materials = [{
+  name  = "pipe-A"
+  group = local.group
+  materials {
     type = "git"
     attributes {
       url = "github.com/gocd/gocd"
     }
-  }]
+  }
 
-  stages = ["${data.gocd_stage_definition.stage-A.json}", "${data.gocd_stage_definition.stage-B.json}"]
+  stages = [data.gocd_stage_definition.stage-A.json, data.gocd_stage_definition.stage-B.json]
 }
 
 data "gocd_stage_definition" "stage-A" {
-  name     = "stage-A"
-  jobs     = ["${data.gocd_job_definition.list.json}"]
+  name = "stage-A"
+  jobs = [data.gocd_job_definition.list.json]
 }
 
 data "gocd_stage_definition" "stage-B" {
-  name     = "stage-B"
-  jobs     = ["${data.gocd_job_definition.list.json}"]
+  name = "stage-B"
+  jobs = [data.gocd_job_definition.list.json]
 }
-
 
 data "gocd_job_definition" "list" {
   name  = "list"
-  tasks = ["${data.gocd_task_definition.list.json}"]
+  tasks = [data.gocd_task_definition.list.json]
 }
 
 data "gocd_task_definition" "list" {
@@ -36,22 +35,21 @@ data "gocd_task_definition" "list" {
   command = "ls"
 }
 
-
 resource "gocd_pipeline" "pipe-B" {
-  name      = "pipe-B"
-  group     = "${local.group}"
-  materials = [{
+  name  = "pipe-B"
+  group = local.group
+  materials {
     type = "dependency"
     attributes {
-      pipeline = "${gocd_pipeline.pipe-A.name}"
-      stage    = "${data.gocd_stage_definition.stage-B.name}"
+      pipeline = gocd_pipeline.pipe-A.name
+      stage    = data.gocd_stage_definition.stage-B.name
     }
-  }]
-  stages = ["${data.gocd_stage_definition.stage-C.json}"]
+  }
+  stages = [data.gocd_stage_definition.stage-C.json]
 }
 
 data "gocd_stage_definition" "stage-C" {
-  name     = "stage-C"
-  jobs     = ["${data.gocd_job_definition.list.json}"]
+  name = "stage-C"
+  jobs = [data.gocd_job_definition.list.json]
 }
 

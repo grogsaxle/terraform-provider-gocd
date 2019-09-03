@@ -25,17 +25,15 @@ data "gocd_job_definition" "test" {
     value = "myusername"
   }
 
-  environment_variables = [
-    {
-      name            = "PASSWORD"
-      encrypted_value = "$R*YN:LDFIOH"
-    },
-    {
-      name   = "HIDDEN"
-      value  = "shown"
-      secure = true
-    },
-  ]
+  environment_variables {
+    name            = "PASSWORD"
+    encrypted_value = "$R*YN:LDFIOH"
+  }
+  environment_variables {
+    name   = "HIDDEN"
+    value  = "shown"
+    secure = true
+  }
 
   resources = [
     "alpha",
@@ -43,22 +41,18 @@ data "gocd_job_definition" "test" {
   ]
 
   tasks = [
-    "${data.gocd_task_definition.test.json}",
+    data.gocd_task_definition.test.json,
   ]
 
-  tabs = [
-    {
-      name = "Report"
-      path = "report1.html"
-    },
-  ]
+  tabs {
+    name = "Report"
+    path = "report1.html"
+  }
 
-  artifacts = [
-    {
-      type   = "build"
-      source = "web.war"
-    },
-  ]
+  artifacts {
+    type   = "build"
+    source = "web.war"
+  }
 
   properties {
     name   = "coverage.class"
@@ -66,3 +60,4 @@ data "gocd_job_definition" "test" {
     xpath  = "substring-before(//report/data/all/coverage[starts-with(@type,'class')]/@value, '%')"
   }
 }
+

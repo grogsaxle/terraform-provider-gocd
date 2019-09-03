@@ -1,48 +1,47 @@
 resource "gocd_pipeline_template" "test-pipeline" {
-  name = "template2-terraform"
-  stages = ["${data.gocd_stage_definition.test-stage.json}"]
+  name   = "template2-terraform"
+  stages = [data.gocd_stage_definition.test-stage.json]
 }
 
 resource "gocd_pipeline" "test-pipeline" {
   name     = "pipeline2-terraform"
   group    = "testing"
-  template = "${gocd_pipeline_template.test-pipeline.id}"
+  template = gocd_pipeline_template.test-pipeline.id
 
-  materials = [
-    {
-      type = "git"
+  materials {
+    type = "git"
 
-      attributes {
-        name        = "gocd-src"
-        url         = "git@github.com:gocd/gocd"
-        branch      = "feature/my-addition"
-        destination = "gocd-dir"
+    attributes {
+      name        = "gocd-src"
+      url         = "git@github.com:gocd/gocd"
+      branch      = "feature/my-addition"
+      destination = "gocd-dir"
 
-        //        auto_update = true
-        filter = [
-          "one",
-          "two",
-        ]
-      }
-    },
-  ]
+      //        auto_update = true
+      filter = [
+        "one",
+        "two",
+      ]
+    }
+  }
 }
 
 data "gocd_stage_definition" "test-stage" {
   name = "test"
   jobs = [
-    "${data.gocd_job_definition.test-job.json}"
+    data.gocd_job_definition.test-job.json,
   ]
 }
 
 data "gocd_job_definition" "test-job" {
   name = "test"
   tasks = [
-    "${data.gocd_task_definition.test.json}"
+    data.gocd_task_definition.test.json,
   ]
 }
+
 data "gocd_task_definition" "test" {
-  type = "exec"
+  type    = "exec"
   command = "echo"
   arguments = [
     "hello",
