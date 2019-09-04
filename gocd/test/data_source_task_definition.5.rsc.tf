@@ -18,4 +18,3 @@ data "gocd_task_definition" "test" {
     value = "value2"
   }
 }
-
