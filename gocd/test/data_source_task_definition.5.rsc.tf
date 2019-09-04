@@ -8,13 +8,17 @@ data "gocd_task_definition" "test" {
   plugin_id      = "plugin.id"
   plugin_version = "plugin.version"
 
-  configuration = {
+  configuration = [{
     key   = "key1"
     value = "value1"
-  }
-
-  configuration = {
+  },
+  {
     key   = "key2"
     value = "value2"
-  }
+  }]
+
+  # configuration = {
+  #   key   = "key2"
+  #   value = "value2"
+  # }
 }
