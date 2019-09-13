@@ -1,3 +1,7 @@
+locals {
+  arg_list_test = ["HELLO", "WORLD"]
+}
+
 resource "gocd_pipeline_template" "test-template4" {
   name   = "test-template4"
   stages = [data.gocd_stage_definition.test-stage.json]
@@ -46,9 +50,6 @@ data "gocd_job_definition" "test-job" {
 data "gocd_task_definition" "test" {
   type    = "exec"
   command = "echo"
-  arguments = [
-    "hello",
-    "world",
-  ]
+  arguments = [for x in locals.arg_list_test : lower(x)]
 }
 
