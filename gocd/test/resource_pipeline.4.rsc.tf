@@ -2,7 +2,7 @@ locals {
   arg_list_test = [
     "HELLO",
     "WORLD",
-    "",]
+  "", ]
 }
 
 resource "gocd_pipeline_template" "test-template4" {
@@ -51,7 +51,7 @@ data "gocd_job_definition" "test-job" {
 }
 
 data "gocd_task_definition" "test" {
-  type    = "exec"
-  command = "echo"
+  type      = "exec"
+  command   = "echo"
   arguments = [for x in local.arg_list_test : lower(x) if x != ""]
 }
