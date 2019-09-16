@@ -122,6 +122,19 @@ data "gocd_task_definition" "gocd-image-build-deploy_deploy_deploy_0" {
   ]
 }
 
+locals {
+  test_env_vars = [
+    {
+      name = "PACKER_ANSIBLE_VERSION"
+      value = "2.0.2.0"
+    },
+    {
+      name = "INSTALL_ANSIBLE_DEPENDENCIES"
+      value = "true"
+    }
+  ]
+}
+
 ## END
 resource "gocd_pipeline" "terraform-image" {
   name     = "terraform-image"
@@ -132,14 +145,26 @@ resource "gocd_pipeline" "terraform-image" {
     Image = "terraform"
   }
 
-  environment_variables {
-    name  = "PACKER_ANSIBLE_VERSION"
-    value = "2.0.2.0"
+  dynamic "environment_variables" {
+    for_each = [for x in local.test_env_vars: {
+      name = x.name
+      value = x.value
+    }]
+
+    content {
+      name = environment_variables.value.name
+      value = environment_variables.value.value
+    }
   }
-  environment_variables {
-    name  = "INSTALL_ANSIBLE_DEPENDENCIES"
-    value = "true"
-  }
+
+  # environment_variables {
+  #   name  = "PACKER_ANSIBLE_VERSION"
+  #   value = "2.0.2.0"
+  # }
+  # environment_variables {
+  #   name  = "INSTALL_ANSIBLE_DEPENDENCIES"
+  #   value = "true"
+  # }
 
   materials {
     type = "git"
