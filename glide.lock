@@ -50,7 +50,7 @@ imports:
   - service/s3
   - service/sts
 - name: github.com/beamly/go-gocd
-  version: 594fec066ca0ca35968c0d10f2d3c71c7a2abeff
+  version: 79d5753d730e84bff5d39c0200452a356ad3c9bd
   subpackages:
   - gocd
 - name: github.com/bgentry/go-netrc

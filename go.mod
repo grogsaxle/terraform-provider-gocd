@@ -6,7 +6,7 @@ require (
 	github.com/apparentlymart/go-textseg v1.0.0
 	github.com/armon/go-radix v1.0.0
 	github.com/aws/aws-sdk-go v0.0.0-20181030211252-d939ec10eabd
-	github.com/beamly/go-gocd v0.0.0-20191217133703-594fec066ca0
+	github.com/beamly/go-gocd v0.0.0-20200107144258-79d5753d730e
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d
 	github.com/bgentry/speakeasy v0.1.0
 	github.com/blang/semver v0.0.0-20180723201105-3c1074078d32
@@ -32,7 +32,7 @@ require (
 	github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2
 	github.com/mattn/go-colorable v0.1.4
-	github.com/mattn/go-isatty v0.0.10
+	github.com/mattn/go-isatty v0.0.11
 	github.com/mitchellh/cli v1.0.0
 	github.com/mitchellh/copystructure v1.0.0
 	github.com/mitchellh/go-homedir v1.0.0
@@ -48,16 +48,16 @@ require (
 	github.com/sirupsen/logrus v1.4.2
 	github.com/stretchr/testify v1.3.0
 	github.com/ulikunitz/xz v0.5.5
-	github.com/urfave/cli v1.22.1 // indirect
+	github.com/urfave/cli v1.22.2 // indirect
 	github.com/zclconf/go-cty v0.0.0-20181017232614-01c5aba823a6
 	golang.org/x/crypto v0.0.0-20190617133340-57b3e21c3d56
 	golang.org/x/net v0.0.0-20190620200207-3b0461eec859
-	golang.org/x/sys v0.0.0-20191024073052-e66fe6eb8e0c
+	golang.org/x/sys v0.0.0-20200107144601-ef85f5a75ddf
 	golang.org/x/text v0.3.0
 	google.golang.org/genproto v0.0.0-20181029155118-b69ba1387ce2
 	google.golang.org/grpc v1.14.0
 	gopkg.in/AlecAivazis/survey.v1 v1.8.7 // indirect
-	gopkg.in/yaml.v2 v2.2.4
+	gopkg.in/yaml.v2 v2.2.7
 )
 
 go 1.13

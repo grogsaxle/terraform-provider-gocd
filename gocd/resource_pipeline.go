@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/beamly/go-gocd/gocd"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/helper/validation"
 	"strings"
@@ -249,8 +250,20 @@ func resourcePipelineRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	pgs, _, err := client.PipelineGroups.List(ctx, "")
-	d.Set("group", pgs.GetGroupByPipelineName(d.Id()).Name)
+	pipelineGroupReturnedSince, _ := version.NewVersion("v19.10.0")
+	v, _, err := client.ServerVersion.Get(context.Background())
+	if err != nil {
+		return err
+	}
+
+	if v.VersionParts.LessThan(pipelineGroupReturnedSince) {
+		pgs, _, err := client.PipelineGroups.List(ctx, "")
+		if err != nil {
+			return err
+		}
+		d.Set("group", pgs.GetGroupByPipelineName(d.Id()).Name)
+	}
+
 	return nil
 }
 
@@ -449,6 +462,9 @@ func readPipeline(d *schema.ResourceData, p *gocd.Pipeline, err error) error {
 	d.SetId(p.Name)
 	if p.Template != "" {
 		d.Set("template", p.Template)
+	}
+	if p.Group != "" {
+		d.Set("group", p.Group)
 	}
 
 	if p.LabelTemplate != "" && p.LabelTemplate != "${COUNT}" {
