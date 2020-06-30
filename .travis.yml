@@ -50,7 +50,7 @@ deploy:
     script: make deploy_on_tag
     on:
       tags: true
-      condition: $TRAVIS_GO_VERSION =~ ^1\.11\.([0-9]+|x)?$ && $GOCD_SKIP_SSL_CHECK = 1
+      condition: $TRAVIS_GO_VERSION =~ ^1\.13\.([0-9]+|x)?$ && $GOCD_SKIP_SSL_CHECK = 1
   - provider: script
     skip_cleanup: true
     script: make deploy_on_develop
