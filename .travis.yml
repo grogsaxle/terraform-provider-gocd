@@ -47,7 +47,9 @@ deploy:
   # deploy to break. We do a `git clean` from the Makefile to perform necessary cleanup.
   - provider: script
     skip_cleanup: true
-    script: make deploy_on_tag
+    script: 
+      - git checkout -- go.mod go.sum
+      - curl -sL https://git.io/goreleaser | bash
     on:
       tags: true
       condition: $TRAVIS_GO_VERSION =~ ^1\.11\.([0-9]+|x)?$ && $GOCD_SKIP_SSL_CHECK = 1
