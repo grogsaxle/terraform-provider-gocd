@@ -22,16 +22,19 @@ script: testacc
 after_failure: cleanup
 
 after_success: report_coverage cleanup
-	-go get -mod=readonly github.com/goreleaser/goreleaser
-	go get -mod=readonly github.com/goreleaser/goreleaser@v0.120.8
 
 prepare_goreleaser:
 	git clean -fd
 	go get -mod=readonly
 	git checkout -- go.mod go.sum
 
-deploy_on_tag: prepare_goreleaser
-	goreleaser --debug
+deploy_on_tag: 
+- provider: script
+  skip_cleanup: true
+  script: curl -sL https://git.io/goreleaser | bash
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = linux
 
 deploy_on_develop: prepare_goreleaser
 	goreleaser --debug --rm-dist --snapshot
