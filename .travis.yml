@@ -46,13 +46,13 @@ deploy:
   # userid `1000`. Our travis user does not have the userid `1000`, so it can not clean those files up, causing the
   # deploy to break. We do a `git clean` from the Makefile to perform necessary cleanup.
   - provider: script
-    skip_cleanup: true
+    cleanup: false
     script: make deploy_on_tag
     on:
       tags: true
       condition: $TRAVIS_GO_VERSION =~ ^1\.13\.([0-9]+|x)?$ && $GOCD_SKIP_SSL_CHECK = 1
   - provider: script
-    skip_cleanup: true
+    cleanup: false
     script: make deploy_on_develop
     on:
       branch: develop
