@@ -24,8 +24,6 @@ after_failure: cleanup
 after_success: report_coverage cleanup
 
 prepare_goreleaser:
-	git clean -fd
-	go get -mod=readonly
 	git checkout -- go.mod go.sum
 
 deploy_on_tag: prepare_goreleaser
